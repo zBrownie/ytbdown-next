@@ -1,7 +1,23 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import Head from "next/head";
+import styles from "../styles/Home.module.css";
+import axios from "axios";
 
 export default function Home() {
+  const linkRef = React.useRef();
+  const [loading, setloading] = React.useState(false);
+  const handleLink = () => {
+    setloading(true);
+
+    axios
+      .get("http://localhost:3030/down", {
+        params: linkRef.current.value,
+      })
+      .then((resp) => {
+        console.log(resp);
+        setloading(false);
+      });
+  };
+
   return (
     <div className={styles.container}>
       <Head>
@@ -11,55 +27,37 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          You<a href="https://www.youtube.com/">Down</a>
         </h1>
 
         <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
+          Download all you videos from youtube in
+          <code className={styles.code}>MP3</code>
         </p>
 
         <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+          <div className={styles.card}>
+            <input
+              type="text"
+              ref={linkRef}
+              placeholder="https://www.youtube.com/watch?v=KK9bwTlAvgo"
+            />
+            <button type="button" onClick={loading ? () => {} : handleLink}>
+              {loading ? "Wait..." : "Down"}
+            </button>
+          </div>
         </div>
       </main>
 
       <footer className={styles.footer}>
         <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+          href="https://media.discordapp.net/attachments/380481733125996544/744988923834531860/unknown.png?width=489&height=497"
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
+          Sorry by Brownie
         </a>
       </footer>
     </div>
-  )
+  );
 }
